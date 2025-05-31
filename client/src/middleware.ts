@@ -28,12 +28,13 @@ export async function middleware(request: NextRequest) {
       },
     }
   )
+  // Check if there's current user in session on this request
   const {
     data: { user },
   } = await supabase.auth.getUser()
 
   // Protect dashboard routes
-  if (request.nextUrl.pathname.startsWith('/dashboard') && !user) {
+  if (request.nextUrl.pathname.startsWith('/profile') && !user) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/signin'
     return NextResponse.redirect(url)
@@ -42,7 +43,7 @@ export async function middleware(request: NextRequest) {
   // Redirect authenticated users away from auth pages
   if (request.nextUrl.pathname.startsWith('/auth') && user) {
     const url = request.nextUrl.clone()
-    url.pathname = '/dashboard'
+    url.pathname = '/profile'
     return NextResponse.redirect(url)
   }
 
