@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Mail, Lock } from "lucide-react";
 import Image from "next/image";
-import { createClient } from "@/lib/supabase";
+import { createClient } from "@/lib/supabaseClient";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -15,13 +15,13 @@ export default function LoginForm() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // Email + password signin
+  // 1) Email + Password sign-in
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setErrorMsg(null);
 
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -32,12 +32,11 @@ export default function LoginForm() {
       return;
     }
 
-    // At this point, Supabase has set a session cookie in the browser.
-    // Next request to /dashboard will pass the middleware guard.
-    router.push("/dashboard");
+    // Supabase set cookie → navigate to /dashboard
+    router.push("/profile");
   };
 
-  // Or, Google OAuth Signin
+  // 2) Google OAuth Sign-in
   const handleGoogleSignIn = async () => {
     setLoading(true);
     setErrorMsg(null);
@@ -45,7 +44,7 @@ export default function LoginForm() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: window.location.origin + "/dashboard",
+        redirectTo: window.location.origin + "/profile",
       },
     });
 
@@ -54,20 +53,18 @@ export default function LoginForm() {
       setLoading(false);
       return;
     }
-
-    // Note: signInWithOAuth redirects you away from the page
-    // to Google, then Supabase callback, then back to /dashboard.
+    // Supabase + Google redirect happen automatically
   };
 
   return (
-    <form onSubmit={handleEmailSignIn} className="space-y-6 w-full max-w-sm">
+    <form onSubmit={handleEmailSignIn} className="space-y-6 w-full p-6">
       {errorMsg && (
         <p className="text-sm text-red-400 bg-red-900/30 p-2 rounded">
           {errorMsg}
         </p>
       )}
 
-      {/* EMAIL INPUT */}
+      {/* EMAIL FIELD */}
       <div className="relative">
         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" />
         <input
@@ -76,11 +73,11 @@ export default function LoginForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full pl-10 pr-4 py-3 bg-[#4B4B4B] placeholder-gray-300 text-gray-50 rounded-lg outline-none focus:ring-2 focus:ring-[#FF6B61]"
+          className="w-full pl-10 pr-4 py-3 bg-[#4B4B4B] placeholder-gray-300 text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF6B61]"
         />
       </div>
 
-      {/* PASSWORD INPUT */}
+      {/* PASSWORD FIELD */}
       <div className="relative">
         <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" />
         <input
@@ -89,11 +86,11 @@ export default function LoginForm() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          className="w-full pl-10 pr-4 py-3 bg-[#4B4B4B] placeholder-gray-300 text-gray-50 rounded-lg outline-none focus:ring-2 focus:ring-[#FF6B61]"
+          className="w-full pl-10 pr-4 py-3 bg-[#4B4B4B] placeholder-gray-300 text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#FF6B61]"
         />
       </div>
 
-      {/* FORGOT PASSWORD LINK */}
+      {/* “Forgot password” link */}
       <div className="text-right">
         <a
           href="/auth/reset-password"
@@ -124,10 +121,20 @@ export default function LoginForm() {
         type="button"
         onClick={handleGoogleSignIn}
         disabled={loading}
-        className="w-full flex justify-center items-center gap-2 py-3 bg-white hover:bg-gray-100 rounded-lg text-gray-800 font-medium disabled:opacity-50"
+        className="w-full flex justify-center items-center gap-2 py-3 bg-white hover:bg-gray-100 rounded-full text-gray-800 font-medium disabled:opacity-50"
       >
-          <Image src="/google.svg" alt="logo" width={16} height={16} />
+        <Image src="/google.svg" alt="Google" width={20} height={20} />
         {loading ? "Redirecting…" : "Sign in with Google"}
+      </button>
+
+      {/* SIGN UP WITH EMAIL */}
+      <button
+        type="button"
+        onClick={() => router.push("/auth/signup")}
+        className="w-full flex justify-center items-center gap-2 py-3 bg-[#B8864B] hover:bg-[#9c6f3f] rounded-lg text-white font-medium"
+      >
+        <Mail className="w-5 h-5" />
+        Sign up with Email
       </button>
     </form>
   );
