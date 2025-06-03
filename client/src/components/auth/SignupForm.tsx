@@ -52,68 +52,65 @@ export default function SignupForm() {
   };
 
   return (
-    <form onSubmit={handleSignup} className="space-y-6 w-full max-w-sm p-6">
+    <form
+      onSubmit={handleSignup}
+      className="w-full max-w-sm sm:max-w-md space-y-4"
+    >
       {errorMsg && (
         <p className="text-sm text-red-400 bg-red-900/30 p-2 rounded">
           {errorMsg}
         </p>
       )}
 
-      {/* EMAIL INPUT */}
-      <div className="flex items-center bg-[#4B4B4B] rounded-xl">
-        <div className="px-3">
-          <Mail className="text-gray-300" />
-        </div>
+      {/* EMAIL */}
+      <div className="relative">
+        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300 w-4 h-4" />
         <input
           type="email"
           placeholder="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="flex-1 bg-transparent placeholder-gray-300 text-gray-50 py-3 pr-4 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-[#FF6B61]"
+          className="w-full pl-10 pr-3 py-3 text-sm bg-[#686666] placeholder-gray-300 text-[#E5C9C9] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#e2ac9d]"
         />
       </div>
 
-      {/* CREATE PASSWORD */}
-      <div className="flex items-center bg-[#4B4B4B] rounded-xl">
-        <div className="px-3">
-          <Lock className="text-gray-300" />
-        </div>
+      {/* PASSWORD */}
+      <div className="relative">
+        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300 w-4 h-4" />
         <input
           type="password"
           placeholder="create password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          className="flex-1 bg-transparent placeholder-gray-300 text-gray-50 py-3 pr-4 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-[#FF6B61]"
+          className="w-full pl-10 pr-3 py-3 text-sm bg-[#686666] placeholder-gray-300 text-[#E5C9C9] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#e2ac9d]"
         />
       </div>
 
-      {/* CONFIRM PASSWORD */}
-      <div className="flex items-center bg-[#4B4B4B] rounded-xl">
-        <div className="px-3">
-          <Lock className="text-gray-300" />
-        </div>
+      {/* CONFIRM */}
+      <div className="relative">
+        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300 w-4 h-4" />
         <input
           type="password"
           placeholder="confirm password"
           value={confirmPwd}
           onChange={(e) => setConfirmPwd(e.target.value)}
           required
-          className="flex-1 bg-transparent placeholder-gray-300 text-gray-50 py-3 pr-4 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-[#FF6B61]"
+          className="w-full pl-10 pr-3 py-3 text-sm bg-[#686666] placeholder-gray-300 text-[#E5C9C9] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#e2ac9d]"
         />
       </div>
 
-      {/* “Go Fishing” BUTTON */}
+      {/* SIGN UP */}
       <button
         type="submit"
         disabled={loading}
-        className="w-full flex justify-center items-center gap-2 py-3 bg-[#6AA88F] hover:bg-[#5f957f] rounded-full text-white font-medium disabled:opacity-50"
+        className="w-full py-3 text-sm bg-[#6AA88F] hover:bg-[#5f957f] rounded-full text-white font-medium flex justify-center items-center gap-2 disabled:opacity-50"
       >
         {loading ? "Registering…" : "Go Fishing"}
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="h-5 w-5"
+          className="w-4 h-4"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"

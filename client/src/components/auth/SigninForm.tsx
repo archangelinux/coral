@@ -57,83 +57,80 @@ export default function LoginForm() {
   };
 
   return (
-    <form onSubmit={handleEmailSignIn} className="w-full p-7">
+    <form
+      onSubmit={handleEmailSignIn}
+      className="w-full max-w-sm sm:max-w-md space-y-4"
+    >
       {errorMsg && (
         <p className="text-sm text-red-400 bg-red-900/30 p-2 rounded">
           {errorMsg}
         </p>
       )}
 
-      {/* EMAIL FIELD */}
-      <div className="relative mb-5">
-        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" />
+      {/* EMAIL */}
+      <div className="relative">
+        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300 w-4 h-4" />
         <input
           type="email"
           placeholder="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="w-full pl-10 pr-4 py-4 bg-[#686666] placeholder-gray-300 text-[#E5C9C9] rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#e2ac9d]"
+          className="w-full pl-10 pr-3 py-3 text-sm bg-[#686666] placeholder-gray-300 text-[#E5C9C9] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#e2ac9d]"
         />
       </div>
 
-      {/* PASSWORD FIELD */}
-      <div className="relative mb-2">
-        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300" />
+      {/* PASSWORD */}
+      <div className="relative">
+        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300 w-4 h-4" />
         <input
           type="password"
           placeholder="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          className="w-full pl-10 pr-4 py-4 bg-[#686666] placeholder-gray-300 text-[#E5C9C9] rounded-2xl focus:outline-none focus:ring-2 focus:ring-[#e2ac9d]"
+          className="w-full pl-10 pr-3 py-3 text-sm bg-[#686666] placeholder-gray-300 text-[#E5C9C9] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#e2ac9d]"
         />
       </div>
 
-      {/* “Forgot password” link */}
-      <div className="text-right mb-6">
-        <a
-          href="/auth/reset-password"
-          className="text-xs text-gray-400 hover:text-gray-200"
-        >
-          forgot password &gt;
-        </a>
+      <div className="text-right text-xs text-gray-400 hover:text-gray-200">
+        <a href="/auth/reset-password">forgot password &gt;</a>
       </div>
 
-      {/* SIGN IN BUTTON */}
+      {/* SIGN IN */}
       <button
         type="submit"
         disabled={loading}
-        className="w-[70%] mx-auto flex justify-center items-center gap-2 py-3 mb-4 bg-[#F98D6F] hover:bg-[#c7816e] rounded-full text-white font-medium disabled:opacity-50"
+        className="w-full py-3 text-sm bg-[#F98D6F] hover:bg-[#c7816e] rounded-full text-white font-medium disabled:opacity-50"
       >
         {loading ? "Signing in…" : "Sign In"}
       </button>
 
-      {/* OR SEPARATOR */}
-      <div className="flex items-center justify-center mb-6">
+      {/* OR */}
+      <div className="flex items-center justify-center gap-3 text-gray-400 text-sm">
         <span className="h-px flex-1 bg-gray-600"></span>
-        <span className="px-3 text-gray-400">or</span>
+        <span>or</span>
         <span className="h-px flex-1 bg-gray-600"></span>
       </div>
 
-      {/* SIGN IN WITH GOOGLE */}
+      {/* GOOGLE */}
       <button
         type="button"
         onClick={handleGoogleSignIn}
         disabled={loading}
-        className="w-[70%] mx-auto mb-6 flex justify-center items-center gap-2 py-3 bg-white hover:bg-gray-100 rounded-full text-gray-800 font-medium disabled:opacity-50"
+        className="w-full flex justify-center items-center gap-2 py-3 text-sm bg-white hover:bg-gray-100 rounded-full text-gray-800 font-medium disabled:opacity-50"
       >
-        <Image src="/google.svg" alt="Google" width={20} height={20} />
+        <Image src="/google.svg" alt="Google" width={18} height={18} />
         {loading ? "Redirecting…" : "Sign in with Google"}
       </button>
 
-      {/* SIGN UP WITH EMAIL */}
+      {/* SIGN UP */}
       <button
         type="button"
         onClick={() => router.push("/auth/signup")}
-        className="w-[70%] mx-auto flex justify-center items-center gap-2 py-3 bg-[#B8864B] hover:bg-[#9c6f3f] rounded-full text-white font-medium"
+        className="w-full flex justify-center items-center gap-2 py-3 text-sm bg-[#B8864B] hover:bg-[#9c6f3f] rounded-full text-white font-medium"
       >
-        <Mail className="w-5 h-5" />
+        <Mail className="w-4 h-4" />
         Sign up with Email
       </button>
     </form>

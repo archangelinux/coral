@@ -25,9 +25,6 @@ export default function Navbar() {
   return (
     <nav
       className={styles.navbar}
-      style={{
-        boxShadow: scrolled ? "0 2px 6px rgba(0,0,0,0.4)" : "none",
-      }}
     >
       {/* logo */}
       <div className={styles.logo}>
