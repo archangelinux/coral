@@ -25,7 +25,7 @@ export default function VerifyEmailPage() {
 
       // If email verified, Supabase sets session.user.email_confirmed_at
       if (session?.user?.email_confirmed_at) {
-        router.push("/dashboard");
+        router.push("/profile")
       } else {
         setMessage("Email verified, but please sign in again.");
         setLoading(false);

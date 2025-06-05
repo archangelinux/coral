@@ -18,6 +18,7 @@ export default function SignupForm() {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg(null);
+    
 
     // 1) Basic client validation
     if (password !== confirmPwd) {
@@ -46,6 +47,7 @@ export default function SignupForm() {
       setLoading(false);
       return;
     }
+    console.log("signup response", data, error);
 
     // 3) Push user to “Check your inbox” page:
     router.push("/auth/verify-email");
