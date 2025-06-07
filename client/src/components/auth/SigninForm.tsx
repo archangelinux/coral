@@ -15,7 +15,7 @@ export default function LoginForm() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // 1) Email + Password sign-in
+  // Email + Password
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -32,11 +32,11 @@ export default function LoginForm() {
       return;
     }
 
-    // Supabase set cookie → navigate to /dashboard
+    // Supabase set cookie -> navigate to /dashboard
     router.push("/profile");
   };
 
-  // 2) Google OAuth Sign-in
+  // Google OAuth
   const handleGoogleSignIn = async () => {
     setLoading(true);
     setErrorMsg(null);
@@ -44,16 +44,14 @@ export default function LoginForm() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: window.location.origin + "/profile",
+        redirectTo: window.location.origin + "/auth/callback",
       },
     });
 
     if (error) {
       setErrorMsg(error.message);
       setLoading(false);
-      return;
     }
-    // Supabase + Google redirect happen automatically
   };
 
   return (
